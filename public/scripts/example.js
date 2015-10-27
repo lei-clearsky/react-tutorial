@@ -35,7 +35,10 @@ var CommentBox = React.createClass({
       dataType: 'json',
       cache: false,
       success: function(data) {
-        this.setState({data: data});
+        this.setState({
+          data: data,
+          commentsCount: data.length
+        });
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(this.props.url, status, err.toString());
@@ -52,7 +55,10 @@ var CommentBox = React.createClass({
       type: 'POST',
       data: comment,
       success: function(data) {
-        this.setState({data: data});
+        this.setState({
+          data: data,
+          commentsCount: data.length
+        });
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(this.props.url, status, err.toString());
@@ -60,7 +66,10 @@ var CommentBox = React.createClass({
     });
   },
   getInitialState: function() {
-    return {data: []};
+    return {
+      data: [],
+      commentsCount: 0
+    };
   },
   componentDidMount: function() {
     this.loadCommentsFromServer();
@@ -70,7 +79,7 @@ var CommentBox = React.createClass({
     return (
       <div className="commentBox">
         <h1>Comments</h1>
-        <CommentList data={this.state.data} />
+        <CommentList data={this.state.data} commentsCount={this.state.commentsCount} />
         <CommentForm onCommentSubmit={this.handleCommentSubmit} />
       </div>
     );
@@ -78,7 +87,46 @@ var CommentBox = React.createClass({
 });
 
 var CommentList = React.createClass({
+  getDefaultProps: function() {
+    console.log("inside getDefaultProps method");
+    return {
+      data: []
+    };
+  },
+  getInitialState:function() {
+    console.log("inside getInitialState method");
+    return {
+      commentsIncreasing: false
+    };
+  },
+  componentWillReceiveProps: function(nextProps) {
+    console.log("inside componentWillReceiveProps method");
+    // console.log('nextProps ', nextProps);
+    // console.log('this.props.commentsCount ', this.props.commentsCount);
+    // console.log('nextProps.commentsCount ', nextProps.commentsCount);
+
+    this.setState({
+      commentsIncreasing: nextProps.commentsCount > this.props.commentsCount
+    });
+  },
+  shouldComponentUpdate:function(){
+    console.log("inside shouldComponentUpdate method");
+    return true;
+  },
+  componentWillUpdate:function(){
+    console.log("inside componentWillUpdate method");
+  },
+  componentDidUpdate:function(){
+    console.log("inside componentDidUpdate method");
+  },
+  componentWillMount:function(){
+    console.log("inside componentWillMount method");
+  },
+  componentDidMount:function(){
+    console.log("inside componentDidMount method");
+  },
   render: function() {
+    var hasNewComment = this.state.commentsIncreasing;
     var commentNodes = this.props.data.map(function(comment, index) {
       return (
         // `key` is a React-specific concept and is not mandatory for the
@@ -92,6 +140,7 @@ var CommentList = React.createClass({
     return (
       <div className="commentList">
         {commentNodes}
+        {hasNewComment && <h2>New comment added!</h2>}
       </div>
     );
   }
@@ -121,6 +170,6 @@ var CommentForm = React.createClass({
 });
 
 ReactDOM.render(
-  <CommentBox url="/api/comments" pollInterval={2000} />,
+  <CommentBox url="/api/comments" pollInterval={10000} />,
   document.getElementById('content')
 );
