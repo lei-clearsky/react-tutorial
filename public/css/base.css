@@ -1,6 +1,6 @@
 body {
   background: #fff;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Lato', sans-serif;
   font-size: 15px;
   line-height: 1.7;
   margin: 0;
@@ -27,25 +27,24 @@ code {
 }
 
 h1, h2, h3, h4 {
-  font-weight: bold;
+  font-weight: 300;
   margin: 0 0 15px;
   padding: 0;
 }
 
 h1 {
-  border-bottom: 1px solid #ddd;
   font-size: 2.5em;
-  font-weight: bold;
   margin: 0 0 15px;
   padding: 0;
 }
 
 h2 {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #fff;
   font-size: 2em;
 }
 
 h3 {
+  border-bottom: 1px solid #fff;
   font-size: 1.5em;
 }
 
@@ -59,4 +58,43 @@ p, ul {
 
 ul {
   padding-left: 30px;
+}
+
+.commentBox {
+  width: 500px;
+  padding: 10px;
+  margin: 0 auto;
+}
+
+.comment {
+  padding: 10px;
+  background-color: #eee;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+input, textarea {
+  display: block;
+  padding: 10px;
+  font-size: 15px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.submitButton {
+  width: 100px;
+  padding: 10px;
+  cursor: pointer;
+  background-color: #09c;
+  border: 1px solid #09c;
+  font-size: 15px;
+  color: #fff;
+}
+
+.remove {
+  color: #DF3535;
+  cursor: pointer;
 }
